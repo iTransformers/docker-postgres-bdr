@@ -25,12 +25,11 @@ RUN \
   curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64" && \
   chmod +x /usr/local/bin/gosu && \
   mkdir -p /var/run/postgresql && \
-  chown -R postgres /var/run/postgresql
+  chown -R postgres /var/run/postgresql && \
+  mkdir -p /var/lib/postgresql/data
 
 COPY container-files/ /
 
 ENV PATH /usr/pgsql-${PG_MAJOR}/bin:$PATH
-
-VOLUME /var/lib/postgresql/data
 
 EXPOSE 5432

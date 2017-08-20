@@ -2,7 +2,20 @@
 set -e
 
 if [ "$1" = 'postgres' ]; then
-	chown -R postgres "$PGDATA"
+	echo "PGDATA is set to $PGDATA"
+
+	if [ -z "$(mkdir -p "$PGDATA")" ]; then
+		echo "Successfully creating $PGDATA"
+	else
+		echo "PGDATA already exists $PGDATA"
+	fi
+
+	if [ -z "$(chown -R postgres "$PGDATA")" ]; then
+		echo "Successfully changing $PGDATA permissions"
+	else
+		echo "Can't change the permissions on $PGDATA"
+	fi
+
 
 	chmod g+s /run/postgresql
 	chown -R postgres:postgres /run/postgresql
